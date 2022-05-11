@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 import axios from "axios"
-import dayjs from "dayjs"
 
 import Header from "../publicComponents/Header"
 
@@ -11,16 +10,16 @@ export default function SignUp(){
     const  [ name, setName ] = useState(null) 
     const [email, setEmail] = useState(null)
     const [ password, setPassword] = useState(null)  
-    const [confirmPassword, setConfirmPassword] = useState(null) 
+    const [confirm_password, setConfirmPassword] = useState(null) 
     async function handleSubmit(e){
         e.preventDefault()
 
         try{
-            const data = {name, email, password, confirmPassword}
-            axios.post("localhost:5000/sign-up", data)
-            window.alert("user created!")
+            const data = { name, email, password, confirm_password}
+            const response = await axios.post("http://localhost:5000/sign-up", data)
+           window.alert(response.data)
         }catch(error){
-            console.log(error.response.message)
+            window.alert(error.response.data)
         }
 
     }
@@ -40,7 +39,7 @@ export default function SignUp(){
                         <input type="password" name="password" placeholder="Ex: mypassword" value={password} onChange={e => setPassword(e.target.value)}/>
 
                         <label htmlFor="">Confirm password</label>
-                        <input type="password" name="password" placeholder="Ex: mypassword" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}/>
+                        <input type="password" name="password" placeholder="Ex: mypassword" value={confirm_password} onChange={e => setConfirmPassword(e.target.value)}/>
 
                         <button type='submit'>Register</button>
                     </form>
