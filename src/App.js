@@ -12,7 +12,7 @@ export default function App() {
     <UserContext.Provider value>
       <BrowserRouter>
         <Routes>
-          <Route path="/" />
+          <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />}/>
           <Route path="/home" element={<Home />} />
         </Routes>

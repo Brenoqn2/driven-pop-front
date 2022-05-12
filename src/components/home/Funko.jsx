@@ -14,10 +14,13 @@ const FunkoContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 150px;
+    height: 150px;
     border: 1px black solid;
     border-radius: 5px;
     margin-top: 10px;
+    background-color: #fff;
 
     img{
         width: 100px;

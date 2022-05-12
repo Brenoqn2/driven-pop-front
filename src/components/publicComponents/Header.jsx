@@ -1,18 +1,23 @@
 import styled from "styled-components"
 
-import { IoCartOutline } from "react-icons/io5"
+import { IoCartOutline, IoPerson } from "react-icons/io5"
 
 export default function Header(){
     return (
         <HeaderContainer>
             <h1>PopDriven</h1>
-            <IoCartOutline fontSize={50}/>
+            <div className="navigators">
+
+                <IoPerson  />
+                <IoCartOutline/>
+            </div>
         </HeaderContainer>
     )
 }
 
 const HeaderContainer = styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     height: 90px;
@@ -32,8 +37,19 @@ const HeaderContainer = styled.div`
          2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 2px 2px 1px #CCCCCC, 
          5px 2px 1px black, 2px 2px 1px black;
     }
-    svg{
-        position: absolute;
-        right: 5%;
+    .navigators{
+        margin-right: 15px;
+        display: flex;
+        width: 100px;
+        justify-content: space-around;
+        align-items: center;
+        
+        svg{
+            width: 35px;
+            height: 35px;
+            border: 1px black solid;
+            border-radius: 10px;
+        }
     }
+    
 `
