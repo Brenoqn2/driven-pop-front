@@ -5,18 +5,21 @@ import "./reset.css";
 
 import SignUp from "./components/sign-up/SignUp";
 import Home from "./components/home/Home"
+import ProductsProvider from "./contexts/ProductsContext.js";
 
 
 export default function App() {
   return (
     <UserContext.Provider value>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-up" element={<SignUp />}/>
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </BrowserRouter>
+      <ProductsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/sign-up" element={<SignUp />}/>
+            <Route path="/home" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      </ProductsProvider>
     </UserContext.Provider>
   );
 }

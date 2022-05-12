@@ -6,24 +6,55 @@ import styled from "styled-components"
 import Header from "../publicComponents/Header"
 import Funko from "./Funko"
 import funkobackground from "./images/funkobackground.jpg"
+import { useProducts } from "../../contexts/ProductsContext"
 
 
 export default function Home(){
     const [funkos, setFunkos] = useState([])
     const [search, setSearch] = useState(null)
-    async function getFunkos(){
+    const [page, setPage] = useState(0)
+    const [productPerPage, setProductPerPage] = useState(20)
+    const {products, setProducts} = useProducts()
+    const pages = Math.ceil(products.length / productPerPage)
+
+
+    useEffect(() => {
+        getFunkos()
+    },[])
+    console.log(Array(pages))
+    async function getFunkos(interval){
         try{
-            const funkos = await axios.get("http://localhost:5000/products")
+            const funkos = await axios.get(`http://localhost:5000/products?interval=${interval}`)
             
-            setFunkos(funkos.data)
+            setProducts(funkos.data)
+
+            const visibleFunkos = (funkos.data).slice(0,20)
+            setFunkos(visibleFunkos)
         }catch(error){
             console.log(error)
         }
     }
-    useEffect(() => {
-        getFunkos()
-    },[])
-    console.log(funkos)
+
+   const controls = {
+       next(){
+           setPage(page + 1)
+           if(page === 5){
+               getFunkos(6)
+           }
+       },
+       prev(){},
+       goTo(e){
+           const page = Number(e.target.value)
+           if(page > 19){
+               getFunkos()
+           }
+            setPage(page)
+            const visibleFunkos = products.slice(page*10,(page*10) + 20)
+            setFunkos(visibleFunkos)
+
+       }
+   }
+   console.log(products)
     return (
         <>
             <Header />
@@ -34,9 +65,11 @@ export default function Home(){
                     <span>All products</span>
                 </div>
                 <main>
-                    {funkos.map(funko => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) }
+                    {funkos.map((funko,index) => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) }
                 </main>
-                <div className="pageNavigation"></div>
+                <div className="pageNavigation">
+                    {Array.from(Array(pages)).map((product,index) => <button value={index} onClick={e => controls.goTo(e)}>{index}</button> )}
+                </div>
             </HomePage>
         </>
     )
@@ -72,5 +105,11 @@ const HomePage = styled.div`
         flex-wrap: wrap;
         justify-content: space-evenly;
         margin-top: 20px;
+    }
+    .pageNavigation{
+        button{
+            font-size: 10px;
+            margin-left: 5px;
+        }
     }
 `
