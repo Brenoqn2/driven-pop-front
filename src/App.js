@@ -4,6 +4,8 @@ import { UserContext } from "./contexts/UserContext.js";
 import "./reset.css";
 
 import SignUp from "./components/sign-up/SignUp";
+import Home from "./components/home/Home"
+
 
 export default function App() {
   return (
@@ -12,6 +14,7 @@ export default function App() {
         <Routes>
           <Route path="/" />
           <Route path="/sign-up" element={<SignUp />}/>
+          <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
