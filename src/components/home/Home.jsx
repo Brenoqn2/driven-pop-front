@@ -10,26 +10,28 @@ import { useProducts } from "../../contexts/ProductsContext"
 
 
 export default function Home(){
-    const [funkos, setFunkos] = useState([])
+    
     const [search, setSearch] = useState(null)
-    const [page, setPage] = useState(0)
+    
     const [productPerPage, setProductPerPage] = useState(20)
     const {products, setProducts} = useProducts()
-    const pages = Math.ceil(products.length / productPerPage)
+    
+    const [currentPage, setCurrentPage] = useState(0)
+    const quantityPages = Math.ceil(products.length / productPerPage)
+    const startInterval = (currentPage * 10)
+    const endInterval = (startInterval + productPerPage)
+    const funkos = products.slice(startInterval,endInterval)
+
 
 
     useEffect(() => {
         getFunkos()
     },[])
-    console.log(Array(pages))
     async function getFunkos(interval){
         try{
             const funkos = await axios.get(`http://localhost:5000/products?interval=${interval}`)
             
             setProducts(funkos.data)
-
-            const visibleFunkos = (funkos.data).slice(0,20)
-            setFunkos(visibleFunkos)
         }catch(error){
             console.log(error)
         }
@@ -37,24 +39,18 @@ export default function Home(){
 
    const controls = {
        next(){
-           setPage(page + 1)
-           if(page === 5){
-               getFunkos(6)
+           setCurrentPage(currentPage + 1)
+           if((currentPage+1) > quantityPages){
+               getFunkos((currentPage * 10))
            }
        },
        prev(){},
        goTo(e){
-           const page = Number(e.target.value)
-           if(page > 19){
-               getFunkos()
-           }
-            setPage(page)
-            const visibleFunkos = products.slice(page*10,(page*10) + 20)
-            setFunkos(visibleFunkos)
+            setCurrentPage(Number(e.target.value))
 
        }
    }
-   console.log(products)
+   console.log(Array(quantityPages))
     return (
         <>
             <Header />
@@ -68,7 +64,7 @@ export default function Home(){
                     {funkos.map((funko,index) => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) }
                 </main>
                 <div className="pageNavigation">
-                    {Array.from(Array(pages)).map((product,index) => <button value={index} onClick={e => controls.goTo(e)}>{index}</button> )}
+                    {Array.from(Array(quantityPages)).map((product,index) => <button value={index} onClick={e => controls.goTo(e)}>{index}</button> )}
                 </div>
             </HomePage>
         </>
