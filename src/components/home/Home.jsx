@@ -2,55 +2,80 @@ import {useState, useEffect} from "react"
 import axios from "axios"
 import styled from "styled-components"
 
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 import Header from "../publicComponents/Header"
 import Funko from "./Funko"
 import funkobackground from "./images/funkobackground.jpg"
 import { useProducts } from "../../contexts/ProductsContext"
-
+import Footer from "../publicComponents/Footer";
+import CurrentPageButton from "./CurrentPageButton";
 
 export default function Home(){
     
     const [search, setSearch] = useState(null)
     
-    const [productPerPage, setProductPerPage] = useState(20)
+    const [quantityPages, setQuantityPages] = useState(9)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [productPageControl, setProductPageControl] = useState(1)
+    
     const {products, setProducts} = useProducts()
     
-    const [currentPage, setCurrentPage] = useState(0)
-    const quantityPages = Math.ceil(products.length / productPerPage)
+    const productsPerPage =( products.length / Number(quantityPages))
     const startInterval = (currentPage * 10)
-    const endInterval = (startInterval + productPerPage)
-    const funkos = products.slice(startInterval,endInterval)
-
-
+    const endInterval = (startInterval + Number(productsPerPage))
+    const funkos = products.slice(startInterval, endInterval)
 
     useEffect(() => {
         getFunkos()
     },[])
-    async function getFunkos(interval){
+    useEffect(() => {
+        getFunkos(productPageControl)
+    }, [productPageControl])
+
+    async function getFunkos(start){ 
+        console.log("entrei no getFunkos")
+        if(!start){
+            start = 1
+        }
         try{
-            const funkos = await axios.get(`http://localhost:5000/products?interval=${interval}`)
-            
-            setProducts(funkos.data)
+            const response = await axios.get(`http://localhost:5000/products?start=${start}`)
+            const funkos = response.data
+            setProducts(funkos)        
+
+
         }catch(error){
             console.log(error)
         }
     }
+    function addProductsToLocalStorage(products){
+        localStorage.setItem("products",JSON.stringify(products))
+    }
 
    const controls = {
        next(){
+           console.log(currentPage)
            setCurrentPage(currentPage + 1)
-           if((currentPage+1) > quantityPages){
-               getFunkos((currentPage * 10))
+
+           if ((productPageControl * 9) === currentPage){
+               addProductsToLocalStorage(products)
+               setProductPageControl(productPageControl + 1)
            }
        },
-       prev(){},
+       prev(){
+           console.log(currentPage)
+           setCurrentPage(currentPage -1 )
+
+           if ((currentPage-1) === ((productPageControl -1) * 9)) {
+               setProductPageControl(productPageControl - 1)
+           }
+       },
        goTo(e){
             setCurrentPage(Number(e.target.value))
-
+            console.log('entrei')
        }
    }
-   console.log(Array(quantityPages))
+   console.log(products)
     return (
         <>
             <Header />
@@ -64,9 +89,14 @@ export default function Home(){
                     {funkos.map((funko,index) => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) }
                 </main>
                 <div className="pageNavigation">
-                    {Array.from(Array(quantityPages)).map((product,index) => <button value={index} onClick={e => controls.goTo(e)}>{index}</button> )}
+                    <IoChevronBack onClick={() => controls.prev()}/> 
+                    {Array.from(Array(quantityPages)).map((product, index) => 
+                    <CurrentPageButton index={(index+1)} goTo={controls.goTo} currentPage={currentPage} pageControl={productPageControl}/>)}
+                    <IoChevronForward onClick={() => controls.next()}/>
                 </div>
             </HomePage>
+                <Footer />
+    
         </>
     )
 }
@@ -103,9 +133,19 @@ const HomePage = styled.div`
         margin-top: 20px;
     }
     .pageNavigation{
-        button{
-            font-size: 10px;
-            margin-left: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        width: 350px;
+        border: 1px dashed  #033a44;
+        margin: 10px;
+        border-radius: 10px;
+        padding: 10px;
+        svg{
+            font-size: 20px;
+            border: 1px dashed blue;
+            border-radius: 10px;
         }
     }
 `
