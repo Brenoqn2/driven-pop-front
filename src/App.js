@@ -1,22 +1,26 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React from "react";
+import { useState } from "react";
 import { UserContext } from "./contexts/UserContext.js";
 import "./reset.css";
 
-import SignUp from "./components/sign-up/SignUp";
-import Home from "./components/home/Home"
 import ProductsProvider from "./contexts/ProductsContext.js";
 
+import SignUp from "./components/authorization/SignUp";
+import Login from "./components/authorization/Login";
+import Home from "./components/home/Home"
 
 export default function App() {
+  const [token, setToken] = useState();
+  const [username, setUsername] = useState();
   return (
-    <UserContext.Provider value>
+
+    <UserContext.Provider value={{ token, setToken, username, setUsername }}>
       <ProductsProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign-up" element={<SignUp />}/>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />}/>
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </ProductsProvider>

@@ -10,8 +10,8 @@ export default function Footer(){
                 <Link to="/">
                     home
                 </Link>
-                <Link to="/sign-in">
-                    sign-in
+                <Link to="/login">
+                    login
                 </Link>
                 <Link to="/sign-up">
                     sign-up
