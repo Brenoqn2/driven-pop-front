@@ -15,16 +15,18 @@ export default function Home(){
     
     const [search, setSearch] = useState(null)
     
-    const [quantityPages, setQuantityPages] = useState(9)
     const [currentPage, setCurrentPage] = useState(1)
     const [productPageControl, setProductPageControl] = useState(1)
-    
     const {products, setProducts} = useProducts()
+    const [productsPerPage, setProductsPerPage] = useState(20)
     
-    const productsPerPage =( products.length / Number(quantityPages))
-    const startInterval = (currentPage * 10)
+
+    let quantityPages = Math.ceil(products.length/productsPerPage)
+    const startInterval =(((currentPage * productsPerPage) - ((productPageControl - 1) * 200 )) -20)
     const endInterval = (startInterval + Number(productsPerPage))
     const funkos = products.slice(startInterval, endInterval)
+    
+    console.log("start",startInterval)
 
     useEffect(() => {
         getFunkos()
@@ -54,39 +56,48 @@ export default function Home(){
 
    const controls = {
        next(){
-           console.log(currentPage)
+           window.scrollTo({top:380})
            setCurrentPage(currentPage + 1)
 
-           if ((productPageControl * 9) === currentPage){
+           if ((productPageControl * 10) === currentPage){
                addProductsToLocalStorage(products)
                setProductPageControl(productPageControl + 1)
            }
        },
        prev(){
-           console.log(currentPage)
-           setCurrentPage(currentPage -1 )
+           window.scrollTo({ top: 300 })
 
-           if ((currentPage-1) === ((productPageControl -1) * 9)) {
-               setProductPageControl(productPageControl - 1)
-           }
+           if(currentPage === 1){
+               return
+            }
+            if ((currentPage-1) === ((productPageControl -1) * 10)) {
+                setProductPageControl(productPageControl - 1)
+            }
+            
+            setCurrentPage(currentPage -1 )
        },
        goTo(e){
+           window.scrollTo({ top: 300 })
             setCurrentPage(Number(e.target.value))
-            console.log('entrei')
        }
    }
-   console.log(products)
+   console.log(funkos)
     return (
         <>
             <Header />
             <HomePage>
                 <input type="search" placeholder="Search something" value={search}/>
-                <img src={funkobackground} alt="" />
+                <img className="topImage" src={funkobackground} alt="" />
                 <div className="filters">
+                    <select type="button" >
+                        <option value="todos">todos</option>
+                        <option value="marvel">marvel</option>
+                        <option value="harry potter">harry potter</option>
+                    </select>
                     <span>All products</span>
                 </div>
                 <main>
-                    {funkos.map((funko,index) => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) }
+                    {funkos.length > 0? funkos.map((funko,index) => {return <Funko image={funko.imageName} name={funko.title} series={funko.series} id={funko._id}/>}) : <span>There is no funkos</span>}
                 </main>
                 <div className="pageNavigation">
                     <IoChevronBack onClick={() => controls.prev()}/> 
@@ -95,7 +106,7 @@ export default function Home(){
                     <IoChevronForward onClick={() => controls.next()}/>
                 </div>
             </HomePage>
-                <Footer />
+            <Footer />
     
         </>
     )
@@ -105,9 +116,8 @@ const HomePage = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background-color: aliceblue;
-
+    min-height: 100vh;
     input{
         width: 100%;
         height: 40px;
@@ -117,7 +127,7 @@ const HomePage = styled.div`
         margin: 2px;
         box-shadow: 5px 12px 5px;
     }
-    img{
+    .topImage{
         width: 100%;
         opacity: 0.88;
     }
@@ -126,11 +136,16 @@ const HomePage = styled.div`
         font-size: 24px;
         font-family: 'Macondo', cursive
     }
+    select{
+        position: absolute;
+        right: 20px;
+    }
     main{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
         margin-top: 20px;
+        min-height: 100px;
     }
     .pageNavigation{
         display: flex;

@@ -5,11 +5,13 @@ export default function currentPageButton(props){
     let {index} = props
     
     if(pageControl > 1){
-        index = (pageControl - 1) * 10 + index - (pageControl - 1)
+        index = (pageControl - 1) * 10 + index - (pageControl - pageControl)
     }
+
+    
     return (     
         index === currentPage ? <Button background="gray" color="white" >{index} </Button >
-         : <Button value={index} background="white" color="black" onClick={(e) => goTo(e) }>{index}</Button>
+            : <Button value={index} background="white" color="black" onClick={(e) => goTo(e) }>{index}</Button>
     )
 }
 const Button = styled.button`

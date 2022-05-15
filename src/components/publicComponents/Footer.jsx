@@ -17,7 +17,5 @@ const FooterContainer = styled.div`
         /* border-radius: 10px; */
         border-radius:10px 10px 0 0 ;
         opacity: 0.88;
-        position: static;
-        bottom: 0;
         width: 100%;
 `
