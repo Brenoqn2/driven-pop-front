@@ -98,6 +98,7 @@ export default function Home() {
                   series={funko.series}
                   id={funko._id}
                   key={funko._id}
+                  handle={funko.handle}
                 />
               );
             })
