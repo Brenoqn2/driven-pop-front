@@ -4,7 +4,7 @@ import {Link} from "react-router-dom"
 import axios from "axios"
 
 import Header from "../publicComponents/Header"
-
+import Footer from "../publicComponents/Footer"
 export default function SignUp(){
 
     const  [ name, setName ] = useState(null) 
@@ -24,6 +24,7 @@ export default function SignUp(){
 
     }
     return (
+        <>
         <SignUpPage>
             <Header />
             <main>
@@ -49,6 +50,8 @@ export default function SignUp(){
                 </FormContainer>
             </main>
         </SignUpPage>
+        <Footer/>
+        </>
     )
 }
 
