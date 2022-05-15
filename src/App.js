@@ -8,7 +8,7 @@ import ProductsProvider from "./contexts/ProductsContext.js";
 import SignUp from "./components/authorization/SignUp";
 import Login from "./components/authorization/Login";
 import Home from "./components/home/Home"
-import Checkout from "./components/authorization/Checkout.jsx";
+import Checkout from "./components/authorization/checkout/Checkout.jsx";
 
 export default function App() {
   const [token, setToken] = useState();
