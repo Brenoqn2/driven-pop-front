@@ -8,6 +8,7 @@ import ProductsProvider from "./contexts/ProductsContext.js";
 import SignUp from "./components/authorization/SignUp";
 import Login from "./components/authorization/Login";
 import Home from "./components/home/Home"
+import Checkout from "./components/authorization/Checkout.jsx";
 
 export default function App() {
   const [token, setToken] = useState();
@@ -19,8 +20,10 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />}/>
+            <Route path="/home" element={<Home />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="login" element={<Login />} />
+            <Route path="checkout" element={<Checkout />} />
           </Routes>
         </BrowserRouter>
       </ProductsProvider>
