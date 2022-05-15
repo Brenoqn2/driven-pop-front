@@ -4,12 +4,9 @@ export const ProductContext = createContext();
 
 export default function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState("");
 
   return (
-    <ProductContext.Provider
-      value={{ products, setProducts, selectedProduct, setSelectedProduct }}
-    >
+    <ProductContext.Provider value={{ products, setProducts }}>
       {children}
     </ProductContext.Provider>
   );
