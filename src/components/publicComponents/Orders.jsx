@@ -8,7 +8,7 @@ export default function Orders() {
   const { token } = useContext(UserContext);
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-    const URL = "http://localhost:5000/checkout";
+    const URL = "https://driven-pop.herokuapp.com/checkout";
     const config = { headers: { authorization: `Bearer ${token}` } };
     const promise = axios.get(URL, config);
     promise.then((response) => {
