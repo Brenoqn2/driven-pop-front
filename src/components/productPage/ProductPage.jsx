@@ -14,17 +14,17 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    const URL = `http://localhost:5000/products/${productHandle}`;
+    const URL = `https://driven-pop.herokuapp.com/products/${productHandle}`;
     const promise = axios.get(URL);
     promise.then((response) => {
       setProduct(response.data);
     });
-    promise.catch((error) => console.log(error));
+    promise.catch((error) => window.alert("something went wrong, try again!"));
   }, [productHandle, setProduct]);
 
   async function updateCart() {
     setAdded(false);
-    const URL = "http://localhost:5000/cart";
+    const URL = "https://driven-pop.herokuapp.com/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
     const newData = { ...product[0], quantity: quantity };
     try {
@@ -51,7 +51,7 @@ export default function ProductPage() {
         setAdded(true);
       }
     } catch (error) {
-      console.log(error);
+      window.alert("something went wrong, try again!")
     }
   }
   return (

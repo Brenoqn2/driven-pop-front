@@ -9,7 +9,7 @@ export default function Cart() {
   const { token, cart, setCart } = useContext(UserContext);
   const navigate = useNavigate()
   useEffect(() => {
-    const URL = "http://localhost:5000/cart";
+    const URL = "https://driven-pop.herokuapp.com/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
     const promise = axios.get(URL, config);
     promise.then((response) => {

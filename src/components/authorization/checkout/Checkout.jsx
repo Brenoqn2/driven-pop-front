@@ -7,11 +7,10 @@ import Footer from "../../publicComponents/Footer"
 import CheckoutConfirm from "./CheckoutConfirm"
 import { UserContext } from "../../../contexts/UserContext";
 import UserInfos from "./UserInfos"
-import { useEffect } from "react/cjs/react.production.min"
 
 export default function Checkout(){
     const [checkoutStage, setCheckoutStage] = useState("checkoutConfirm")
-    const { token, cart, setCart } = useContext(UserContext);
+    const { token, cart } = useContext(UserContext);
     
     async function continuePurchase(nextStage){
         const response = window.confirm("Are you sure to continue purchase?")
@@ -21,29 +20,22 @@ export default function Checkout(){
         setCheckoutStage(nextStage)
     }
 
-    async function finishPurchase(userInfos,confirmSave){
+    async function finishPurchase(userInfos){
         const config = {
             headers: {
                 "authorization": `Bearer ${token}`
             }
         }
-        console.log(userInfos)
         try {
-
-            if (confirmSave) {
-                const infosResponse = await axios.put("http://localhost:5000/checkout/infos", userInfos, config)
-
                 const checkoutData = {
                     userInfos,
                     products: cart
                 }
-                const checkoutResponse = await axios.post("http://localhost:5000/checkout", checkoutData, config)
+                const checkoutResponse = await axios.post("https://driven-pop.herokuapp.com/checkout", checkoutData, config)
 
-                console.log("infosResponse", infosResponse)
-                console.log("checkoutResponse", checkoutResponse)
-            }
+            
         } catch (error) {
-            console.log("catch", error)
+            window.alert("something went wrong, try again!")
         }
     }
     return (

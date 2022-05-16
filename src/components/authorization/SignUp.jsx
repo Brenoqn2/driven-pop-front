@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Header from "../publicComponents/Header";
+import Footer from "../publicComponents/Footer";
 
 export default function SignUp() {
   const [name, setName] = useState(null);
@@ -18,7 +19,7 @@ export default function SignUp() {
 
     try {
       const data = { name, email, password, confirm_password };
-      const response = await axios.post("http://localhost:5000/sign-up", data);
+      const response = await axios.post("https://driven-pop.herokuapp.com/sign-up", data);
       window.alert(response.data);
       navigate("/login");
     } catch (error) {
@@ -74,6 +75,7 @@ export default function SignUp() {
           </Link>
         </FormContainer>
       </main>
+      <Footer />
     </Background>
   );
 }

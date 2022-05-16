@@ -8,7 +8,7 @@ export default function CartItem(props) {
   const { title, quantity, price, imageName } = item;
   const [quantityItem, setQuantity] = useState(quantity);
   const { token, setCart, cart } = useContext(UserContext);
-  const URL = "http://localhost:5000/cart";
+  const URL = "https://driven-pop.herokuapp.com/cart";
   const config = { headers: { authorization: `Bearer ${token}` } };
 
   let cost = price.replace("R$", "");
@@ -51,7 +51,7 @@ export default function CartItem(props) {
       const updatedCart = await axios.get(URL, config);
       setCart(updatedCart.data);
     } catch (err) {
-      console.log(err);
+      window.alert("something went wrong, try again!");
     }
   }
 

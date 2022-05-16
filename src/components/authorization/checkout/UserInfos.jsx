@@ -17,25 +17,25 @@ export default function UserInfos(props){
     const [payment_method, setPayment_method] = useState(null)
 
     const [infos, setInfos] = useState({})
-
-    async function getOlderInfos(flex){
-        if(asideState === "flex"){
-            setAsideState(flex)
-            return
-        }
-        setAsideState(flex)
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        try{
-            const infos = await axios.get("http://localhost:5000/checkout/infos")
-            setInfos(infos)
-        }catch{
-            console.log("deu ruim")
-        }
-    }
+    // não implementado ainda
+    // async function getOlderInfos(flex){
+    //     if(asideState === "flex"){
+    //         setAsideState(flex)
+    //         return
+    //     }
+    //     setAsideState(flex)
+    //     const config = {
+    //         headers: {
+    //             "Authorization": `Bearer ${token}`,
+    //         }
+    //     }
+    //     try{
+    //         const infos = await axios.get("http://localhost:5000/checkout/infos")
+    //         setInfos(infos)
+    //     }catch{
+    //         console.log("deu ruim")
+    //     }
+    // }
     
     function handleConfirmCheckout(){
         const response = window.confirm("do you want save your infos?")
@@ -52,7 +52,7 @@ export default function UserInfos(props){
         <>
             <Background visibility={visibility}>
                     <h3>Fields marked with an asterisk are required!</h3>
-                    <button className="olderInfos" onClick={() => getOlderInfos("flex")}><IoArrowBackCircleOutline />Show older infos</button>
+                    {/* <button className="olderInfos" onClick={() => getOlderInfos("flex")}><IoArrowBackCircleOutline />Show older infos</button> */}
                 <main>
                     <form action="">
                         <div>
@@ -84,7 +84,8 @@ export default function UserInfos(props){
                     </form>
                     <button onClick={() => handleConfirmCheckout()}>confirm checkout</button>
                 </main>
-                <Aside visibility={asideState}>
+                {/* não implementado ainda */}
+                {/* <Aside visibility={asideState}>
                     {infos ?
                         <div className="infos">
                             <span>{infos.zip_code}</span>
@@ -95,7 +96,7 @@ export default function UserInfos(props){
                             <button>Use infos</button>
                     </div> : <span>There is no infos</span> }
                     <button onClick={() => setAsideState("none")}>Back to form</button>
-                </Aside>
+                </Aside> */}
             </Background>
         </>
     )
@@ -125,7 +126,8 @@ const Background = styled.div`
         justify-content: center;
         height: 100%;
         width: 90%;
-        margin-top: 80px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
     span{
         font-family: "macondo",cursive;
@@ -139,7 +141,7 @@ const Background = styled.div`
         width: 100%;
         height: 100%;
         justify-content: space-between;
-        margin-top: 50px;
+        margin-top: 20px;
 
         label {
             margin-bottom: 5px;
@@ -171,7 +173,7 @@ const Background = styled.div`
         flex-direction: column;
         align-items: center;
     }
-    .olderInfos{
+    /* .olderInfos{
         display: flex;
         align-items: center;
         justify-content: center;
@@ -191,49 +193,49 @@ const Background = styled.div`
             position: absolute;
             left: 5px;
         }
-    }
+    } */
     
 `
-const Aside = styled.div`
-    display: ${props => props.visibility} ;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    width: 50%;
-    right: 0;
-    height: calc(100vh - 190px);
-    background-color: black;
-    opacity: 0.8;
+// const Aside = styled.div`
+//     display: ${props => props.visibility} ;
+//     flex-direction: column;
+//     align-items: center;
+//     position: absolute;
+//     width: 50%;
+//     right: 0;
+//     height: calc(100vh - 190px);
+//     background-color: black;
+//     opacity: 0.8;
 
-    .infos{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: 1px dashed whitesmoke;
-        border-radius: 5px;
-        margin-top: 10px;
-        overflow-x: hidden;
-        box-sizing: border-box;
-        width: 90%;
-        min-height: 150px ;
+//     .infos{
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         border: 1px dashed whitesmoke;
+//         border-radius: 5px;
+//         margin-top: 10px;
+//         overflow-x: hidden;
+//         box-sizing: border-box;
+//         width: 90%;
+//         min-height: 150px ;
 
-    }
-    span{
-        width: 100%;
-        color: #fff;
-        margin-top: 2px;
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-    button{
-        width: 170px;
-        height: 30px;
-        margin-top: 25px;
-        border-radius: 15px;
-        border: 1px black solid;
-        background-color: #63c063;
-        font-size: 20px;
-        font-family: "macondo", cursive;
-    }
+//     }
+//     span{
+//         width: 100%;
+//         color: #fff;
+//         margin-top: 2px;
+//         overflow-x: hidden;
+//         overflow-y: hidden;
+//     }
+//     button{
+//         width: 170px;
+//         height: 30px;
+//         margin-top: 25px;
+//         border-radius: 15px;
+//         border: 1px black solid;
+//         background-color: #63c063;
+//         font-size: 20px;
+//         font-family: "macondo", cursive;
+//     }
 
-`
+// `
