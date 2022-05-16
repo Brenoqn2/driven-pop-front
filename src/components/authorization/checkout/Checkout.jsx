@@ -9,6 +9,9 @@ import UserInfos from "./UserInfos"
 export default function Checkout(){
     const [checkoutStage, setCheckoutStage] = useState("checkoutConfirm")
 
+    
+
+    const [userInfos, setUserInfos] = useState([])
     function continuePurchase(nextStage){
         const response = window.confirm("Are you sure to continue purchase?")
         if(!response){
@@ -33,6 +36,8 @@ const Background = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw;
+    overflow-x: hidden;
 
     h2{
         font-family: 'Macondo', cursive;
