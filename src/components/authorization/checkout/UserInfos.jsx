@@ -5,28 +5,24 @@ import { UserContext } from "../../../contexts/UserContext"
 import axios from "axios"
 
 export default function UserInfos(props){
-    const {visibility,continuePurchase} = props
+    const { visibility,finishPurchase} = props
     const [asideState, setAsideState] = useState("none")
 
     const {token} = useContext(UserContext)
     
-    const [zipcode, setZipcode] = useState(null)
+    const [zip_code, setZipcode] = useState(null)
     const [adress, setAdress] = useState(null)
     const [adress_number, setAdress_number] = useState(null)
     const [adress_complement, setAdress_complement] = useState(null)
     const [payment_method, setPayment_method] = useState(null)
 
-    const [infos, setInfos] = useState([])
-    console.log(payment_method)
+    const [infos, setInfos] = useState({})
 
     async function getOlderInfos(flex){
-        console.log("entrei1")
         if(asideState === "flex"){
-            console.log("entrei2")
             setAsideState(flex)
             return
         }
-        console.log("entrei3",flex)
         setAsideState(flex)
         const config = {
             headers: {
@@ -40,6 +36,18 @@ export default function UserInfos(props){
             console.log("deu ruim")
         }
     }
+    
+    function handleConfirmCheckout(){
+        const response = window.confirm("do you want save your infos?")
+        const data = {
+            zip_code,
+            adress,
+            adress_number,
+            adress_complement,
+            payment_method
+        }
+        finishPurchase(data,response)
+    }
     return  (
         <>
             <Background visibility={visibility}>
@@ -49,7 +57,7 @@ export default function UserInfos(props){
                     <form action="">
                         <div>
                             <label htmlFor="">Zip code *</label>
-                            <input type="text" placeholder="EX: 75710" value={zipcode || ""} onChange={(e) => setZipcode(e.target.value)}/>
+                            <input type="text" placeholder="EX: 75710" value={zip_code || ""} onChange={(e) => setZipcode(e.target.value)}/>
                         </div>
                         <div>
                             <label htmlFor="">Adress *</label>
@@ -74,12 +82,12 @@ export default function UserInfos(props){
                             </select>
                         </div>
                     </form>
-                    <button onClick={() => continuePurchase("finishPurchase")}>Continue purchase</button>
+                    <button onClick={() => handleConfirmCheckout()}>confirm checkout</button>
                 </main>
                 <Aside visibility={asideState}>
                     {infos ?
                         <div className="infos">
-                            <span>{infos.zipcode}</span>
+                            <span>{infos.zip_code}</span>
                             <span>adress</span>
                             <span>adress number</span>
                             <span>adress complement</span>
@@ -101,7 +109,7 @@ const Background = styled.div`
     width:100%;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: calc(100% - 210px);
+    height: calc(100% - 190px);
     /* min-height: 100vh; */
     h3{
         font-size: 24px;
@@ -167,18 +175,18 @@ const Background = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 200px;
+        width: 160px;
         height: 30px;
         border-radius: 15px;
         border: 1px black solid;
         background-color: #63c063;
         opacity: 0.9;
         color: white;
-        font-size: 20px;
+        font-size: 16px;
         font-family: "macondo", cursive;
         position: absolute;
         top: 140px;
-        left: calc(100vw - 170px);
+        left: calc(100vw - 140px);
         svg{
             position: absolute;
             left: 5px;

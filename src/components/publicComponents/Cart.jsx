@@ -53,6 +53,7 @@ const CartPage = styled.aside`
   z-index: 2;
   top: 0px;
   left: 0px;
+  margin-top: 90px;
 `;
 
 const Header = styled.div`

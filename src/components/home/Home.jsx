@@ -160,10 +160,10 @@ const HomePage = styled.div`
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 20px;
-    max-height: calc(530px);
+    max-height: calc(100vh - 170px);
     overflow-x: scroll;
     overflow-y: scroll;
-    margin-bottom: 100px;
+    margin-bottom: 110px;
 
       .pageNavigation {
         display: flex;

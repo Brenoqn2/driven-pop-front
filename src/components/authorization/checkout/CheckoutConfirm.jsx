@@ -12,11 +12,9 @@ export default function CheckoutConfirm(props){
             const newPrice = product.price.replace("R$","").split(",")
 
             sum += Number(newPrice[0] * Number(product.quantity))
-            console.log("sum", sum)
         })
         setTotalPrice(Number(sum).toFixed(2))
         
-        console.log("cart",products)
     },[])
 
 
