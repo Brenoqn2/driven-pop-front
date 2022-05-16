@@ -18,7 +18,7 @@ export default function SignUp() {
 
     try {
       const data = { name, email, password, confirm_password };
-      const response = await axios.post("http://localhost:5000/sign-up", data);
+      const response = await axios.post("https://driven-pop.herokuapp.com/sign-up", data);
       window.alert(response.data);
       navigate("/login");
     } catch (error) {

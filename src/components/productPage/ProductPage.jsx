@@ -14,7 +14,7 @@ export default function ProductPage() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    const URL = `http://localhost:5000/products/${productHandle}`;
+    const URL = `https://driven-pop.herokuapp.com/products/${productHandle}`;
     const promise = axios.get(URL);
     promise.then((response) => {
       setProduct(response.data);
@@ -24,7 +24,7 @@ export default function ProductPage() {
 
   async function updateCart() {
     setAdded(false);
-    const URL = "http://localhost:5000/cart";
+    const URL = "https://driven-pop.herokuapp.com/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
     const newData = { ...product[0], quantity: quantity };
     try {

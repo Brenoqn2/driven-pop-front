@@ -32,7 +32,7 @@ export default function Home() {
       }
       try {
         const response = await axios.get(
-          `http://localhost:5000/products?start=${start}`
+          `https://driven-pop.herokuapp.com/products?start=${start}`
         );
         const funkos = response.data;
         setProducts(funkos);

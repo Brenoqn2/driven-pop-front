@@ -18,7 +18,7 @@ export default function Login() {
 
     try {
       const data = { email, password };
-      const response = await axios.post("http://localhost:5000/login", data);
+      const response = await axios.post("https://driven-pop.herokuapp.com/login", data);
       setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       setUsername(response.data.username);
