@@ -11,11 +11,9 @@ export default function ProductPage() {
   const [quantity, setQuantity] = useState(1);
   useEffect(() => {
     const URL = `http://localhost:5000/products/${productHandle}`;
-    console.log(URL);
     const promise = axios.get(URL);
     promise.then((response) => {
       setProduct(response.data);
-      console.log(response.data);
     });
     promise.catch((error) => console.log(error));
   }, [productHandle, setProduct]);
@@ -33,7 +31,7 @@ export default function ProductPage() {
             <div className="division"></div>
             <ProductInfo>
               <h1>{product[0].title}</h1>
-              <p>R$20,00</p>
+              <p>{product[0].price}</p>
               <div>
                 <QuantityButton>
                   <ion-icon

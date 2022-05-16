@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 export default function Funko(props) {
-  const { name, image, handle } = props;
+  const { name, image, handle, price } = props;
   const replacedImage = image.replace("www", "images");
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ export default function Funko(props) {
     >
       <img src={replacedImage} alt="" />
       <span>{name}</span>
-      <span className="price">R$20,00</span>
+      <span className="price">{price}</span>
     </FunkoContainer>
   );
 }

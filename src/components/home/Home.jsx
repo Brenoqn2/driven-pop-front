@@ -99,6 +99,7 @@ export default function Home() {
                   id={funko._id}
                   key={funko._id}
                   handle={funko.handle}
+                  price={funko.price}
                 />
               );
             })
