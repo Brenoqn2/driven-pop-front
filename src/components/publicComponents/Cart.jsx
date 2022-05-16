@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const { token, cart, setCart } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const URL = "https://driven-pop.herokuapp.com/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
@@ -21,13 +21,15 @@ export default function Cart() {
   }, [token, setCart]);
 
   let total = 0;
-  cart.forEach((item) => {
-    let price = item.price;
-    price = price.replace("R$", "");
-    price = Number(price.replace(",", "."));
-    price = price * item.quantity;
-    total += price;
-  });
+  if (cart !== undefined) {
+    cart.forEach((item) => {
+      let price = item.price;
+      price = price.replace("R$", "");
+      price = Number(price.replace(",", "."));
+      price = price * item.quantity;
+      total += price;
+    });
+  }
   return (
     <CartPage>
       <Header>Shopping Cart</Header>
@@ -51,7 +53,7 @@ const CartPage = styled.aside`
   background: aliceblue;
   position: fixed;
   z-index: 2;
-  top: 0px;
+  top: -90px;
   left: 0px;
   margin-top: 90px;
 `;

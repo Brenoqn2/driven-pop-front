@@ -12,8 +12,6 @@ import Footer from "../publicComponents/Footer";
 import CurrentPageButton from "./CurrentPageButton";
 
 export default function Home() {
-  const [search, setSearch] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
   const [productPageControl, setProductPageControl] = useState(1);
   const { products, setProducts } = useProducts();
@@ -37,7 +35,7 @@ export default function Home() {
         const funkos = response.data;
         setProducts(funkos);
       } catch (error) {
-        window.alert("something went wrong, try again!")
+        window.alert("something went wrong, try again!");
       }
     }
     getFunkos(productPageControl);
@@ -70,47 +68,47 @@ export default function Home() {
     },
   };
   return (
-      <HomePage>
-        <Header />
-        
-        <img className="topImage" src={funkobackground} alt="" />
-        <div className="filters">
-          <span>All products</span>
-        </div>
-        <main>
-          {funkos.length > 0 ? (
-            funkos.map((funko, index) => {
-              return (
-                <Funko
-                  image={funko.imageName}
-                  name={funko.title}
-                  series={funko.series}
-                  id={funko._id}
-                  key={funko._id}
-                  handle={funko.handle}
-                  price={funko.price}
-                />
-              );
-            })
-          ) : (
-            <span>There is no funkos</span>
-          )}
-          <div className="pageNavigation">
-            <IoChevronBack onClick={() => controls.prev()} />
-            {Array.from(Array(quantityPages)).map((product, index) => (
-              <CurrentPageButton
-                index={index + 1}
-                goTo={controls.goTo}
-                currentPage={currentPage}
-                pageControl={productPageControl}
-                key={index}
+    <HomePage>
+      <Header />
+
+      <img className="topImage" src={funkobackground} alt="" />
+      <div className="filters">
+        <span>All products</span>
+      </div>
+      <main>
+        {funkos.length > 0 ? (
+          funkos.map((funko, index) => {
+            return (
+              <Funko
+                image={funko.imageName}
+                name={funko.title}
+                series={funko.series}
+                id={funko._id}
+                key={funko._id}
+                handle={funko.handle}
+                price={funko.price}
               />
-            ))}
-            <IoChevronForward onClick={() => controls.next()} />
-          </div>
-        </main>
-        <Footer />
-      </HomePage>
+            );
+          })
+        ) : (
+          <span>There is no funkos</span>
+        )}
+        <div className="pageNavigation">
+          <IoChevronBack onClick={() => controls.prev()} />
+          {Array.from(Array(quantityPages)).map((product, index) => (
+            <CurrentPageButton
+              index={index + 1}
+              goTo={controls.goTo}
+              currentPage={currentPage}
+              pageControl={productPageControl}
+              key={index}
+            />
+          ))}
+          <IoChevronForward onClick={() => controls.next()} />
+        </div>
+      </main>
+      <Footer />
+    </HomePage>
   );
 }
 
@@ -120,7 +118,7 @@ const HomePage = styled.div`
   align-items: center;
   background-color: aliceblue;
   height: calc(100% + 530px);
-  overflow-x:hidden;
+  overflow-x: hidden;
   overflow-y: scroll;
   position: relative;
   input {
@@ -139,7 +137,7 @@ const HomePage = styled.div`
   .filters {
     margin-top: 20px;
     font-size: 24px;
-    font-family: "Macondo", cursive;
+    font-family: "Montserrat", sans-serif;
   }
   select {
     position: absolute;
@@ -154,22 +152,23 @@ const HomePage = styled.div`
     max-height: calc(100vh - 170px);
     overflow-x: scroll;
     overflow-y: scroll;
-    margin-bottom: 110px;
+    margin-bottom: 15px;
 
-      .pageNavigation {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 50px;
-        width: 350px;
-        border: 1px dashed #033a44;
+    .pageNavigation {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      width: 350px;
+      border: 1px dashed #033a44;
+      border-radius: 10px;
+      padding: 10px;
+      svg {
+        font-size: 20px;
+        border: 1px dashed blue;
         border-radius: 10px;
-        padding: 10px;
-        svg {
-          font-size: 20px;
-          border: 1px dashed blue;
-          border-radius: 10px;
-        }
       }
+    }
   }
 `;

@@ -41,7 +41,7 @@ const FunkoContainer = styled.div`
     overflow-x: hidden;
     overflow-y: hidden;
     margin-top: 5px;
-    font-family: "Macondo", cursive;
+    font-family: "Montserrat", sans-serif;
     max-height: 60px;
   }
   .price {

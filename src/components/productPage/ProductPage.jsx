@@ -51,7 +51,7 @@ export default function ProductPage() {
         setAdded(true);
       }
     } catch (error) {
-      window.alert("something went wrong, try again!")
+      window.alert("something went wrong, try again!");
     }
   }
   return (
@@ -86,7 +86,7 @@ export default function ProductPage() {
                     }}
                   ></ion-icon>
                 </QuantityButton>
-                <BuyButton onClick={() => updateCart()}>Comprar</BuyButton>
+                <BuyButton onClick={() => updateCart()}>Buy</BuyButton>
               </div>
               {added ? <p>Added to cart!</p> : <></>}
             </ProductInfo>
