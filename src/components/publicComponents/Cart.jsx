@@ -3,10 +3,11 @@ import axios from "axios";
 import { useEffect, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const { token, cart, setCart } = useContext(UserContext);
-
+  const navigate = useNavigate()
   useEffect(() => {
     const URL = "http://localhost:5000/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
@@ -38,7 +39,7 @@ export default function Cart() {
       <Footer>
         <p className="total">Total:</p>
         <p className="value">R${total}</p>
-        <BuyButton>Checkout</BuyButton>
+        <BuyButton onClick={() => navigate("/checkout")}>Checkout</BuyButton>
       </Footer>
     </CartPage>
   );
@@ -52,6 +53,7 @@ const CartPage = styled.aside`
   z-index: 2;
   top: 0px;
   left: 0px;
+  margin-top: 90px;
 `;
 
 const Header = styled.div`

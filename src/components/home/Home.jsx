@@ -70,9 +70,8 @@ export default function Home() {
     },
   };
   return (
-    <>
-      <Header />
       <HomePage>
+        <Header />
         <input
           type="search"
           placeholder="Search something"
@@ -106,23 +105,22 @@ export default function Home() {
           ) : (
             <span>There is no funkos</span>
           )}
+          <div className="pageNavigation">
+            <IoChevronBack onClick={() => controls.prev()} />
+            {Array.from(Array(quantityPages)).map((product, index) => (
+              <CurrentPageButton
+                index={index + 1}
+                goTo={controls.goTo}
+                currentPage={currentPage}
+                pageControl={productPageControl}
+                key={index}
+              />
+            ))}
+            <IoChevronForward onClick={() => controls.next()} />
+          </div>
         </main>
-        <div className="pageNavigation">
-          <IoChevronBack onClick={() => controls.prev()} />
-          {Array.from(Array(quantityPages)).map((product, index) => (
-            <CurrentPageButton
-              index={index + 1}
-              goTo={controls.goTo}
-              currentPage={currentPage}
-              pageControl={productPageControl}
-              key={index}
-            />
-          ))}
-          <IoChevronForward onClick={() => controls.next()} />
-        </div>
+        <Footer />
       </HomePage>
-      <Footer />
-    </>
   );
 }
 
@@ -131,7 +129,10 @@ const HomePage = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: aliceblue;
-  min-height: 100vh;
+  height: calc(100% + 530px);
+  overflow-x:scroll;
+  overflow-y: scroll;
+  position: relative;
   input {
     width: 100%;
     height: 40px;
@@ -159,22 +160,25 @@ const HomePage = styled.div`
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 20px;
-    min-height: 100px;
-  }
-  .pageNavigation {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 50px;
-    width: 350px;
-    border: 1px dashed #033a44;
-    margin: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    svg {
-      font-size: 20px;
-      border: 1px dashed blue;
-      border-radius: 10px;
-    }
+    max-height: calc(100vh - 170px);
+    overflow-x: scroll;
+    overflow-y: scroll;
+    margin-bottom: 110px;
+
+      .pageNavigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 50px;
+        width: 350px;
+        border: 1px dashed #033a44;
+        border-radius: 10px;
+        padding: 10px;
+        svg {
+          font-size: 20px;
+          border: 1px dashed blue;
+          border-radius: 10px;
+        }
+      }
   }
 `;

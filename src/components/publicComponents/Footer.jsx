@@ -34,6 +34,8 @@ const FooterContainer = styled.div`
         border-radius:10px 10px 0 0 ;
         opacity: 0.88;
         width: 100%;
+        position: fixed;
+        bottom: 0;
         justify-content: space-evenly;
         div{
             display: flex;

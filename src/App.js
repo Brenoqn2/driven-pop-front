@@ -7,7 +7,8 @@ import ProductsProvider from "./contexts/ProductsContext.js";
 
 import SignUp from "./components/authorization/SignUp";
 import Login from "./components/authorization/Login";
-import Home from "./components/home/Home";
+import Home from "./components/home/Home"
+import Checkout from "./components/authorization/checkout/Checkout.jsx";
 import ProductPage from "./components/productPage/ProductPage";
 
 export default function App() {
@@ -25,10 +26,12 @@ export default function App() {
       <ProductsProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home />}/>
+            <Route path="/home" element={<Home />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="login" element={<Login />} />
-            <Route path="home" element={<Home />} />
+            <Route path="checkout" element={<Checkout />} />
+
             <Route path="/products/:productHandle" element={<ProductPage />} />
           </Routes>
         </BrowserRouter>
