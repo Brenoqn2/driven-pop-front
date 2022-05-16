@@ -1,14 +1,17 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../publicComponents/Header";
 import Footer from "../publicComponents/Footer";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const { productHandle } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const { token } = useContext(UserContext);
+
   useEffect(() => {
     const URL = `http://localhost:5000/products/${productHandle}`;
     const promise = axios.get(URL);
@@ -18,6 +21,33 @@ export default function ProductPage() {
     promise.catch((error) => console.log(error));
   }, [productHandle, setProduct]);
 
+  async function updateCart() {
+    const URL = "http://localhost:5000/cart";
+    const config = { headers: { authorization: `Bearer ${token}` } };
+    const newData = { ...product[0], quantity: quantity };
+    try {
+      let cart = await axios.get(URL, config);
+      cart = cart.data;
+      if (!cart) cart = [];
+      let index;
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i].handle === product[0].handle) {
+          index = i;
+
+          break;
+        }
+      }
+      if (index !== undefined) {
+        cart[index].quantity += quantity;
+        await axios.put(URL, { products: cart }, config);
+      } else {
+        cart.push(newData);
+        await axios.put(URL, { products: cart }, config);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <Header />
@@ -50,7 +80,7 @@ export default function ProductPage() {
                     }}
                   ></ion-icon>
                 </QuantityButton>
-                <BuyButton>Comprar</BuyButton>
+                <BuyButton onClick={() => updateCart()}>Comprar</BuyButton>
               </div>
             </ProductInfo>
           </>
