@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../publicComponents/Header";
-import Footer from "../publicComponents/Footer"
+import Footer from "../publicComponents/Footer";
 import { Background, FormContainer } from "../authorization/SignUp";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -20,10 +20,11 @@ export default function Login() {
       const data = { email, password };
       const response = await axios.post("http://localhost:5000/login", data);
       setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
       setUsername(response.data.username);
       navigate("/");
     } catch (error) {
-      window.alert(error.response.data);
+      window.alert(error);
     }
   }
   return (

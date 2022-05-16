@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext.js";
 import "./reset.css";
 
@@ -13,6 +13,10 @@ import ProductPage from "./components/productPage/ProductPage";
 export default function App() {
   const [token, setToken] = useState();
   const [username, setUsername] = useState();
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) setToken(localToken);
+  });
   return (
     <UserContext.Provider value={{ token, setToken, username, setUsername }}>
       <ProductsProvider>
