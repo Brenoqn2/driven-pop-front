@@ -3,10 +3,12 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { IoCartOutline, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Orders from "./Orders";
 import Cart from "./Cart";
 
 export default function Header() {
   const [showCart, setShowCart] = useState(false);
+  const [showOrders, setShowOrders] = useState(false);
   const navigate = useNavigate();
   const { token } = useContext(UserContext);
   return (
@@ -16,7 +18,7 @@ export default function Header() {
         <div className="navigators">
           {token ? (
             <>
-              <IoPerson />
+              <IoPerson onClick={() => setShowOrders(true)} />
               <IoCartOutline onClick={() => setShowCart(true)} />
             </>
           ) : (
@@ -35,6 +37,19 @@ export default function Header() {
             ></ion-icon>
           </ExitCart>
           <Cart setShowCart={setShowCart} />
+        </>
+      ) : (
+        <></>
+      )}
+      {showOrders ? (
+        <>
+          <ExitCart>
+            <ion-icon
+              name="close-circle-outline"
+              onClick={() => setShowOrders(false)}
+            ></ion-icon>
+          </ExitCart>
+          <Orders />
         </>
       ) : (
         <></>

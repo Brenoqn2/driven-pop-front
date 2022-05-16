@@ -67,7 +67,6 @@ export default function UserInfos(props) {
   }
 
   function handleConfirmCheckout() {
-    console.log("foi");
     const data = {
       zip_code,
       adress,

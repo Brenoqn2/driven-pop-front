@@ -21,7 +21,7 @@ export default function Cart() {
   }, [token, setCart]);
 
   let total = 0;
-  if (cart !== undefined) {
+  if (Array.isArray(cart)) {
     cart.forEach((item) => {
       let price = item.price;
       price = price.replace("R$", "");
@@ -34,9 +34,13 @@ export default function Cart() {
     <CartPage>
       <Header>Shopping Cart</Header>
       <ItemsContainer>
-        {cart.map((item) => {
-          return <CartItem item={item} key={item._id} />;
-        })}
+        {Array.isArray(cart) ? (
+          cart.map((item) => {
+            return <CartItem item={item} key={item._id} />;
+          })
+        ) : (
+          <></>
+        )}
       </ItemsContainer>
       <Footer>
         <p className="total">Total:</p>
