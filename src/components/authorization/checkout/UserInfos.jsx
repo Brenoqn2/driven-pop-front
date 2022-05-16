@@ -15,7 +15,7 @@ export default function UserInfos(props) {
   const [zip_code, setZipcode] = useState(null);
   const [adress, setAdress] = useState(null);
   const [adress_number, setAdress_number] = useState(null);
-  const [adress_complement, setAdress_complement] = useState(null);
+  const [adress_complement, setAdress_complement] = useState("");
   const [payment_method, setPayment_method] = useState(null);
 
   // const [infos, setInfos] = useState({})
