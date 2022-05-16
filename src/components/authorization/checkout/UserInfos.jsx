@@ -1,22 +1,44 @@
 import styled from "styled-components"
-import {useState} from "react"
+import {useState, useContext} from "react"
+
+import { UserContext } from "../../../contexts/UserContext"
+import axios from "axios"
 
 export default function UserInfos(props){
     const {visibility,continuePurchase} = props
     const [asideState, setAsideState] = useState("none")
+
+    const {token} = useContext(UserContext)
     
     const [zipcode, setZipcode] = useState(null)
     const [adress, setAdress] = useState(null)
     const [adress_number, setAdress_number] = useState(null)
     const [adress_complement, setAdress_complement] = useState(null)
     const [payment_method, setPayment_method] = useState(null)
+
+    const [infos, setInfos] = useState([])
     console.log(payment_method)
+
+    async function getOlderInfos(flex){
+        setAsideState(flex)
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        try{
+            const infos = await axios.get("http://localhost:5000/checkout/infos")
+            setInfos(infos)
+        }catch{
+            console.log("deu ruim")
+        }
+    }
     return  (
         <Background visibility={visibility}>
             <main>
                 <h3>Fields marked with an asterisk are required!</h3>
                 <div className="olderInfos">
-                    <button onClick={() => setAsideState("flex")}>Show older infos</button>
+                    <button onClick={() => getOlderInfos("flex")}>Show older infos</button>
                 </div>
                 <form action="">
                     <div>
@@ -49,14 +71,15 @@ export default function UserInfos(props){
                 <button onClick={() => continuePurchase("finishPurchase")}>Continue purchase</button>
             </main>
             <Aside visibility={asideState}>
-                <div className="infos">
-                    <span>zipcode</span>
-                    <span>adress</span>
-                    <span>adress number</span>
-                    <span>adress complement</span>
-                    <span>payment method</span>
-                    <button>Use infos</button>
-                </div>
+                {infos ?
+                    <div className="infos">
+                        <span>{infos.zipcode}</span>
+                        <span>adress</span>
+                        <span>adress number</span>
+                        <span>adress complement</span>
+                        <span>payment method</span>
+                        <button>Use infos</button>
+                </div> : <span>There is no infos</span> }
                 <button onClick={() => setAsideState("none")}>Back to form</button>
             </Aside>
         </Background>
