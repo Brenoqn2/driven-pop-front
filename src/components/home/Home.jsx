@@ -71,7 +71,7 @@ export default function Home() {
   };
   return (
       <HomePage>
-      <Header />
+        <Header />
         <input
           type="search"
           placeholder="Search something"
