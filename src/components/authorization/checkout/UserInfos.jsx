@@ -99,6 +99,9 @@ const Background = styled.div`
     flex-direction: column;
     position: relative;
     width:100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: calc(100% - 210px);
     /* min-height: 100vh; */
     h3{
         font-size: 24px;

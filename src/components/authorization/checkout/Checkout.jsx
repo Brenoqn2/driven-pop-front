@@ -38,7 +38,9 @@ const Background = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100vw;
+    height: calc(100vh);
     overflow-x: hidden;
+    position: relative;
 
     h2{
         font-family: 'Macondo', cursive;

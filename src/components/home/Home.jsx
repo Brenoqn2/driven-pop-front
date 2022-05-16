@@ -129,7 +129,9 @@ const HomePage = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: aliceblue;
-  min-height: 100vh;
+  height: calc(100% + 530px);
+  overflow-x:scroll;
+  overflow-y: scroll;
   position: relative;
   input {
     width: 100%;
@@ -158,7 +160,7 @@ const HomePage = styled.div`
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 20px;
-    height: 700px;
+    max-height: calc(530px);
     overflow-x: scroll;
     overflow-y: scroll;
     margin-bottom: 100px;

@@ -41,6 +41,8 @@ const Background = styled.div`
     display: ${props => props.visibility};
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
+    height: calc(100% - 210px);
     h2{
         font-family: 'Macondo', cursive;
         font-size: 48px;
