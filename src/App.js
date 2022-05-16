@@ -13,12 +13,15 @@ import ProductPage from "./components/productPage/ProductPage";
 export default function App() {
   const [token, setToken] = useState();
   const [username, setUsername] = useState();
+  const [cart, setCart] = useState([]);
   useEffect(() => {
     const localToken = localStorage.getItem("token");
     if (localToken) setToken(localToken);
-  });
+  }, [setToken]);
   return (
-    <UserContext.Provider value={{ token, setToken, username, setUsername }}>
+    <UserContext.Provider
+      value={{ token, setToken, username, setUsername, cart, setCart }}
+    >
       <ProductsProvider>
         <BrowserRouter>
           <Routes>
