@@ -26,7 +26,6 @@ export default function Checkout(){
                 "authorization": `Bearer ${token}`
             }
         }
-        console.log(userInfos)
         try {
                 const checkoutData = {
                     userInfos,
@@ -34,10 +33,9 @@ export default function Checkout(){
                 }
                 const checkoutResponse = await axios.post("https://driven-pop.herokuapp.com/checkout", checkoutData, config)
 
-                console.log("checkoutResponse", checkoutResponse)
             
         } catch (error) {
-            console.log("catch", error)
+            window.alert("something went wrong, try again!")
         }
     }
     return (

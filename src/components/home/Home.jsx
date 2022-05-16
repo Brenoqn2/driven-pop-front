@@ -37,7 +37,7 @@ export default function Home() {
         const funkos = response.data;
         setProducts(funkos);
       } catch (error) {
-        console.log(error);
+        window.alert("something went wrong, try again!")
       }
     }
     getFunkos(productPageControl);
@@ -72,19 +72,9 @@ export default function Home() {
   return (
       <HomePage>
         <Header />
-        <input
-          type="search"
-          placeholder="Search something"
-          value={search || ""}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        
         <img className="topImage" src={funkobackground} alt="" />
         <div className="filters">
-          <select type="button">
-            <option value="todos">todos</option>
-            <option value="marvel">marvel</option>
-            <option value="harry potter">harry potter</option>
-          </select>
           <span>All products</span>
         </div>
         <main>
@@ -130,7 +120,7 @@ const HomePage = styled.div`
   align-items: center;
   background-color: aliceblue;
   height: calc(100% + 530px);
-  overflow-x:scroll;
+  overflow-x:hidden;
   overflow-y: scroll;
   position: relative;
   input {
@@ -160,6 +150,7 @@ const HomePage = styled.div`
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 20px;
+    min-height: calc(100vh - 570px);
     max-height: calc(100vh - 170px);
     overflow-x: scroll;
     overflow-y: scroll;

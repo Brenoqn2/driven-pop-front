@@ -51,7 +51,7 @@ export default function CartItem(props) {
       const updatedCart = await axios.get(URL, config);
       setCart(updatedCart.data);
     } catch (err) {
-      console.log(err);
+      window.alert("something went wrong, try again!");
     }
   }
 

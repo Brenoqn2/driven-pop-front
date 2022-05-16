@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Header from "../publicComponents/Header";
+import Footer from "../publicComponents/Footer";
 
 export default function SignUp() {
   const [name, setName] = useState(null);
@@ -74,6 +75,7 @@ export default function SignUp() {
           </Link>
         </FormContainer>
       </main>
+      <Footer />
     </Background>
   );
 }

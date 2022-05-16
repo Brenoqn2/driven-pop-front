@@ -19,7 +19,7 @@ export default function ProductPage() {
     promise.then((response) => {
       setProduct(response.data);
     });
-    promise.catch((error) => console.log(error));
+    promise.catch((error) => window.alert("something went wrong, try again!"));
   }, [productHandle, setProduct]);
 
   async function updateCart() {
@@ -51,7 +51,7 @@ export default function ProductPage() {
         setAdded(true);
       }
     } catch (error) {
-      console.log(error);
+      window.alert("something went wrong, try again!")
     }
   }
   return (
