@@ -10,7 +10,8 @@ export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const { productHandle } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const { token } = useContext(UserContext);
+  const { token, setCart } = useContext(UserContext);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     const URL = `http://localhost:5000/products/${productHandle}`;
@@ -22,6 +23,7 @@ export default function ProductPage() {
   }, [productHandle, setProduct]);
 
   async function updateCart() {
+    setAdded(false);
     const URL = "http://localhost:5000/cart";
     const config = { headers: { authorization: `Bearer ${token}` } };
     const newData = { ...product[0], quantity: quantity };
@@ -40,9 +42,13 @@ export default function ProductPage() {
       if (index !== undefined) {
         cart[index].quantity += quantity;
         await axios.put(URL, { products: cart }, config);
+        setCart(cart);
+        setAdded(true);
       } else {
         cart.push(newData);
         await axios.put(URL, { products: cart }, config);
+        setCart(cart);
+        setAdded(true);
       }
     } catch (error) {
       console.log(error);
@@ -82,6 +88,7 @@ export default function ProductPage() {
                 </QuantityButton>
                 <BuyButton onClick={() => updateCart()}>Comprar</BuyButton>
               </div>
+              {added ? <p>Added to cart!</p> : <></>}
             </ProductInfo>
           </>
         ) : (

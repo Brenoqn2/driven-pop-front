@@ -1,28 +1,45 @@
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { IoCartOutline, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Cart from "./Cart";
 
 export default function Header() {
+  const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
   const { token } = useContext(UserContext);
   return (
-    <HeaderContainer>
-      <h1 onClick={() => navigate("/")}>PopDriven</h1>
-      <div className="navigators">
-        {token ? (
-          <>
-            <IoPerson />
-            <IoCartOutline />
-          </>
-        ) : (
-          <>
-            <IoPerson onClick={() => navigate("/login")} />
-          </>
-        )}
-      </div>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <h1 onClick={() => navigate("/")}>PopDriven</h1>
+        <div className="navigators">
+          {token ? (
+            <>
+              <IoPerson />
+              <IoCartOutline onClick={() => setShowCart(true)} />
+            </>
+          ) : (
+            <>
+              <IoPerson onClick={() => navigate("/login")} />
+            </>
+          )}
+        </div>
+      </HeaderContainer>
+      {showCart ? (
+        <>
+          <ExitCart>
+            <ion-icon
+              name="close-circle-outline"
+              onClick={() => setShowCart(false)}
+            ></ion-icon>
+          </ExitCart>
+          <Cart setShowCart={setShowCart} />
+        </>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 
@@ -64,5 +81,16 @@ const HeaderContainer = styled.div`
       border: 1px black solid;
       border-radius: 10px;
     }
+  }
+`;
+
+const ExitCart = styled.div`
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  ion-icon {
+    font-size: 40px;
+    color: white;
   }
 `;
